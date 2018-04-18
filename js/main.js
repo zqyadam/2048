@@ -128,7 +128,7 @@ $(document).keydown(function (event) {
             }
             break;
         case 40: //down
-            if (moveLeft()) {
+            if (moveDown()) {
                 generateOneNumber();
                 isGameOver();
             }
@@ -234,6 +234,38 @@ function moveUp() {
         }
     }
     
+    setTimeout('updateBoardView()', 200);
+    return true;
+
+}
+
+function moveDown() {
+    if (!canMoveDown(board)) {
+        return false;
+    }
+    console.log('moving up');
+
+    // move up
+    for (let j = 0; j < 4; j++) {
+        for (let i = 2; i >= 0; i--) {
+            if (board[i][j] != 0) {
+                for (let k = 3; k > i; k--) {
+                    if (board[k][j] == 0 && noBlockVertical(j, i, k, board)) {
+                        showMoveAnimation(i, j, k, j);
+                        board[k][j] = board[i][j];
+                        board[i][j] = 0;
+                        continue;
+                    } else if (board[k][j] == board[i][j] && noBlockVertical(j, i, k, board)) {
+                        showMoveAnimation(i, j, k, j);
+                        board[k][j] += board[i][j];
+                        board[i][j] = 0;
+                        continue;
+                    }
+                }
+            }
+        }
+    }
+
     setTimeout('updateBoardView()', 200);
     return true;
 

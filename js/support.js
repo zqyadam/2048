@@ -103,6 +103,20 @@ function canMoveUp(board) {
 }
 
 
+function canMoveDown(board) {
+    for (let j = 0; j < 4; j++) {
+        for (let i = 2; i >=0; i--) {
+            if (board[i][j] != 0) {
+                if (board[i + 1][j] == 0 || board[i + 1][j] == board[i][j]) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+
 function noBlockHorizontal(row, col1, col2, board) {
     for (let i = col1 + 1; i < col2; i++) {
         if (board[row][i] !== 0) {
