@@ -9,16 +9,16 @@ function showNumberWithAnimation(i, j, number) {
         height: '100px',
         left: getPosLeft(i, j),
         top: getPosTop(i, j)
-    }, 10);
+    }, 50);
 }
 
 
 function showMoveAnimation(fromX, fromY, toX, toY) {
-    let numberCell = $(`number-cell-${fromX}-${fromY}`);
+    let numberCell = $(`#number-cell-${fromX}-${fromY}`);
 
     numberCell.animate({
         top: getPosTop(toX, toY),
         left: getPosLeft(toX, toY)
     }, 200);
-    
+
 }

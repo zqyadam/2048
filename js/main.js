@@ -95,7 +95,7 @@ function nospace(board) {
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (board[i][j] == 0) {
-                return false
+                return false;
             }
         }
     }
@@ -108,29 +108,35 @@ $(document).keydown(function (event) {
 
     switch (event.keyCode) {
         case 37: // left
-            console.log('left');
-
             if (moveLeft()) {
-                generateOneNumber();
-                isGameOver();
+                setTimeout(() => {
+                    generateOneNumber();
+                    isGameOver();
+                }, 210);
             }
             break;
         case 38: // up
             if (moveUp()) {
-                generateOneNumber();
-                isGameOver();
+                setTimeout(() => {
+                    generateOneNumber();
+                    isGameOver();
+                }, 210);
             }
             break;
         case 39: // right
             if (moveRight()) {
-                generateOneNumber();
-                isGameOver();
+                setTimeout(() => {
+                    generateOneNumber();
+                    isGameOver();
+                }, 210);
             }
             break;
         case 40: //down
             if (moveDown()) {
-                generateOneNumber();
-                isGameOver();
+                setTimeout(() => {
+                    generateOneNumber();
+                    isGameOver();
+                }, 210);
             }
             break;
         default:
@@ -212,7 +218,7 @@ function moveUp() {
         return false;
     }
     console.log('moving up');
-    
+
     // move up
     for (let j = 0; j < 4; j++) {
         for (let i = 1; i < 4; i++) {
@@ -233,7 +239,7 @@ function moveUp() {
             }
         }
     }
-    
+
     setTimeout('updateBoardView()', 200);
     return true;
 
