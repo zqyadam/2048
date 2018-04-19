@@ -75,18 +75,24 @@ function generateOneNumber() {
         return false;
     }
 
-    let randX = parseInt(Math.random() * 4);
-    let randY = parseInt(Math.random() * 4);
+    let emptySpace = findEmptySpace(board);
+    console.log(emptySpace.length);
+    
+    let [randX, randY] = emptySpace[parseInt(Math.random() * emptySpace.length)];
+    // console.log(randIndex);
+    
+    // let randX = parseInt(Math.random() * 4);
+    // let randY = parseInt(Math.random() * 4);
 
-    console.log(randX);
-    console.log(randY);
+    // console.log(randX);
+    // console.log(randY);
 
-    while (board[randX][randY] != 0) {
-        console.log('try another position');
+    // while (board[randX][randY] != 0) {
+    //     console.log('try another position');
 
-        randX = parseInt(Math.random() * 4);
-        randY = parseInt(Math.random() * 4);
-    }
+    //     randX = parseInt(Math.random() * 4);
+    //     randY = parseInt(Math.random() * 4);
+    // }
 
     let randNumber = Math.random() < 0.5 ? 2 : 4;
 

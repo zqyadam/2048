@@ -136,6 +136,19 @@ function noBlockVertical(col, row1, row2, board) {
     return true;
 }
 
+
+function findEmptySpace(board) {
+    let emptySpaceArr = [];
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (board[i][j] == 0) {
+                emptySpaceArr.push([i,j]);
+            }
+        }
+    }
+    return emptySpaceArr;
+}
+
 function nospace(board) {
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
