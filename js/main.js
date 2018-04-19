@@ -1,5 +1,6 @@
 let board = new Array();
 let score = 0;
+let hasConflicted = new Array();
 
 $(document).ready(function () {
     newGame();
@@ -23,14 +24,18 @@ function initBoard() {
 
     for (let i = 0; i < 4; i++) {
         board[i] = new Array();
+        hasConflicted[i] = new Array();
         for (let j = 0; j < 4; j++) {
             board[i][j] = 0;
+            hasConflicted[i][j] = false;
         }
     }
 
     generateOneNumber();
     generateOneNumber();
     updateBoardView();
+
+    score = 0;
 }
 
 
@@ -58,6 +63,8 @@ function updateBoardView() {
                 theNumberCell.css('color', getNumberColor(board[i][j]));
                 theNumberCell.text(board[i][j]);
             }
+
+            hasConflicted[i][j] = false;
         }
     }
 }
@@ -91,52 +98,33 @@ function generateOneNumber() {
 }
 
 
-function nospace(board) {
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-            if (board[i][j] == 0) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
 
 
 $(document).keydown(function (event) {
-    console.log(event.keyCode);
-
+    event.preventDefault();
     switch (event.keyCode) {
         case 37: // left
             if (moveLeft()) {
-                setTimeout(() => {
-                    generateOneNumber();
-                    isGameOver();
-                }, 210);
+                setTimeout("generateOneNumber()", 210);
+                setTimeout("isGameOver()", 310); 
             }
             break;
         case 38: // up
             if (moveUp()) {
-                setTimeout(() => {
-                    generateOneNumber();
-                    isGameOver();
-                }, 210);
+                setTimeout("generateOneNumber()", 210);
+                setTimeout("isGameOver()", 310); 
             }
             break;
         case 39: // right
             if (moveRight()) {
-                setTimeout(() => {
-                    generateOneNumber();
-                    isGameOver();
-                }, 210);
+                setTimeout("generateOneNumber()", 210);
+                setTimeout("isGameOver()", 310); 
             }
             break;
         case 40: //down
             if (moveDown()) {
-                setTimeout(() => {
-                    generateOneNumber();
-                    isGameOver();
-                }, 210);
+                setTimeout("generateOneNumber()", 210);
+                setTimeout("isGameOver()", 310); 
             }
             break;
         default:
@@ -146,7 +134,13 @@ $(document).keydown(function (event) {
 
 
 function isGameOver() {
+    if (nospace(board) && nomove(board)) {
+        gameOver();
+    }
+}
 
+function gameOver() {
+    alert('gameover');
 }
 
 
@@ -165,10 +159,14 @@ function moveLeft() {
                         board[i][k] = board[i][j];
                         board[i][j] = 0;
                         continue;
-                    } else if (board[i][k] == board[i][j] && noBlockHorizontal(i, k, j, board)) {
+                    } else if (board[i][k] == board[i][j] && noBlockHorizontal(i, k, j, board) && !hasConflicted[i][k]) {
                         showMoveAnimation(i, j, i, k);
                         board[i][k] += board[i][j];
                         board[i][j] = 0;
+                        score += board[i][k];
+                        updateScore(score);
+
+                        hasConflicted[i][k] = true;
                         continue;
                     }
                 }
@@ -197,10 +195,13 @@ function moveRight() {
                         board[i][k] = board[i][j];
                         board[i][j] = 0;
                         continue;
-                    } else if (board[i][k] == board[i][j] && noBlockHorizontal(i, j, k, board)) {
+                    } else if (board[i][k] == board[i][j] && noBlockHorizontal(i, j, k, board) && !hasConflicted[i][k]) {
                         showMoveAnimation(i, j, i, k);
                         board[i][k] += board[i][j];
                         board[i][j] = 0;
+                        score += board[i][k];
+                        updateScore(score);
+                        hasConflicted[i][k] = true;
                         continue;
                     }
                 }
@@ -217,7 +218,6 @@ function moveUp() {
     if (!canMoveUp(board)) {
         return false;
     }
-    console.log('moving up');
 
     // move up
     for (let j = 0; j < 4; j++) {
@@ -229,10 +229,13 @@ function moveUp() {
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
                         continue;
-                    } else if (board[k][j] == board[i][j] && noBlockVertical(j, k, i, board)) {
+                    } else if (board[k][j] == board[i][j] && noBlockVertical(j, k, i, board) && !hasConflicted[k][j]) {
                         showMoveAnimation(i, j, k, j);
                         board[k][j] += board[i][j];
                         board[i][j] = 0;
+                        score += board[k][j];
+                        updateScore(score);
+                        hasConflicted[k][j] = true;
                         continue;
                     }
                 }
@@ -249,7 +252,6 @@ function moveDown() {
     if (!canMoveDown(board)) {
         return false;
     }
-    console.log('moving up');
 
     // move up
     for (let j = 0; j < 4; j++) {
@@ -261,10 +263,13 @@ function moveDown() {
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
                         continue;
-                    } else if (board[k][j] == board[i][j] && noBlockVertical(j, i, k, board)) {
+                    } else if (board[k][j] == board[i][j] && noBlockVertical(j, i, k, board) && !hasConflicted[k][j]) {
                         showMoveAnimation(i, j, k, j);
                         board[k][j] += board[i][j];
                         board[i][j] = 0;
+                        score += board[k][j];
+                        updateScore(score);
+                        hasConflicted[k][j] = true;
                         continue;
                     }
                 }

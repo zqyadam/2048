@@ -135,3 +135,22 @@ function noBlockVertical(col, row1, row2, board) {
     }
     return true;
 }
+
+function nospace(board) {
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (board[i][j] == 0) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
+function nomove(board) {
+    if (canMoveLeft(board) || canMoveRight(board) || canMoveUp(board) || canMoveDown(board)) {
+        return false        
+    }
+    return true;
+}
