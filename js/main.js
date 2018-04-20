@@ -63,9 +63,9 @@ function initBoard() {
 
     generateOneNumber();
     generateOneNumber();
-    updateBoardView();
-
+    
     score = 0;
+    updateBoardView();
 }
 
 
@@ -85,6 +85,15 @@ function updateBoardView() {
                 theNumberCell.css('left', getPosLeft(i, j) + cellSideLength / 2);
 
             } else {
+                if (board[i][j] >9999) {
+                    theNumberCell.css('font-size', 0.3 * cellSideLength + 'px');
+                }else if(board[i][j] > 999){
+                    theNumberCell.css('font-size', 0.4 * cellSideLength + 'px');
+                } else if (board[i][j] > 99){
+                    theNumberCell.css('font-size', 0.5 * cellSideLength + 'px');
+                }else{
+                    theNumberCell.css('font-size', 0.6 * cellSideLength + 'px');
+                }
                 theNumberCell.css('height', cellSideLength);
                 theNumberCell.css('width', cellSideLength);
                 theNumberCell.css('top', getPosTop(i, j));
@@ -100,7 +109,7 @@ function updateBoardView() {
     }
 
     $('.number-cell').css('line-height', cellSideLength + 'px');
-    $('.number-cell').css('font-size', 0.6 * cellSideLength + 'px');
+    
 
 
 }
