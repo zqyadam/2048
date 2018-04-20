@@ -3,6 +3,7 @@ function showNumberWithAnimation(i, j, number) {
     numberCell.css('background-color', getNumberBackgroundColor(number));
     numberCell.css('color', getNumberColor(number));
     numberCell.css('border-radius', 0.06 * cellSideLength);
+    numberCell.css('font-size', 0.6 * cellSideLength + 'px');
     numberCell.text(number);
 
     numberCell.animate({
