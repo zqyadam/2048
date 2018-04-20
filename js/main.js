@@ -2,6 +2,12 @@ let board = new Array();
 let score = 0;
 let hasConflicted = new Array();
 
+let startX = 0;
+let startY = 0;
+let endX = 0;
+let endY = 0;
+
+
 $(document).ready(function () {
     newGame();
 });
@@ -156,6 +162,68 @@ $(document).keydown(function (event) {
             break;
     }
 });
+
+
+$(document).on('touchstart', function (event) {
+    startX = event.touches[0].pageX;
+    startY = event.touches[0].pageY;
+})
+
+
+$(document).on('touchend', function (event) {
+    endX = event.changedTouches[0].pageX;
+    endY = event.changedTouches[0].pageY;
+
+    let deltaX = endX - startX;
+    let deltaY = endY - startY;
+
+    if (Math.abs(deltaX) < 0.1 * documentWidth && Math.abs(deltaY) < 0.1 * documentWidth) {
+        return;
+    }
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        // 横向
+        if (deltaX > 0) {
+            // right
+            if (moveRight()) {
+                setTimeout("generateOneNumber()", 210);
+                setTimeout("isGameOver()", 310);
+            }
+
+        } else {
+            // left
+
+            if (moveLeft()) {
+                setTimeout("generateOneNumber()", 210);
+                setTimeout("isGameOver()", 310);
+            }
+        }
+
+    } else {
+        // 纵向
+        if (deltaY > 0) {
+            // down
+
+            if (moveDown()) {
+                setTimeout("generateOneNumber()", 210);
+                setTimeout("isGameOver()", 310);
+            }
+        } else {
+            // up
+
+            if (moveUp()) {
+                setTimeout("generateOneNumber()", 210);
+                setTimeout("isGameOver()", 310);
+            }
+        }
+    }
+
+})
+
+
+$(document).on('touchmove', function (e) {
+    e.preventDefault();
+})
 
 
 function isGameOver() {
