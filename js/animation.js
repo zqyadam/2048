@@ -2,11 +2,12 @@ function showNumberWithAnimation(i, j, number) {
     let numberCell = $(`#number-cell-${i}-${j}`);
     numberCell.css('background-color', getNumberBackgroundColor(number));
     numberCell.css('color', getNumberColor(number));
+    numberCell.css('border-radius', 0.06 * cellSideLength);
     numberCell.text(number);
 
     numberCell.animate({
-        width: '100px',
-        height: '100px',
+        width: cellSideLength,
+        height: cellSideLength,
         left: getPosLeft(i, j),
         top: getPosTop(i, j)
     }, 50);

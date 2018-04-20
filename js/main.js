@@ -8,8 +8,32 @@ $(document).ready(function () {
 
 
 function newGame() {
+    prepareForMobile();
     // init board
     initBoard();
+}
+
+
+function prepareForMobile() {
+    if (documentWidth > 500) {
+        gridContainerWidth = 500;
+        cellSideLength = 100;
+        cellSpace = 20;
+
+    }
+
+
+    $('#grid-container').css('width', gridContainerWidth - 2 * cellSpace);
+    $('#grid-container').css('height', gridContainerWidth - 2 * cellSpace);
+    $('#grid-container').css('padding', cellSpace);
+    $('#grid-container').css('border-radius', 0.02 * gridContainerWidth);
+
+    $('.grid-cell').css('width', cellSideLength);
+    $('.grid-cell').css('height', cellSideLength);
+    $('.grid-cell').css('border-radius', 0.06 * cellSideLength);
+
+
+
 }
 
 
@@ -51,14 +75,15 @@ function updateBoardView() {
             if (board[i][j] == 0) {
                 theNumberCell.css('height', '0px');
                 theNumberCell.css('width', '0px');
-                theNumberCell.css('top', getPosTop(i, j) + 50);
-                theNumberCell.css('left', getPosLeft(i, j) + 50);
+                theNumberCell.css('top', getPosTop(i, j) + cellSideLength / 2);
+                theNumberCell.css('left', getPosLeft(i, j) + cellSideLength / 2);
 
             } else {
-                theNumberCell.css('height', '100px');
-                theNumberCell.css('width', '100px');
+                theNumberCell.css('height', cellSideLength);
+                theNumberCell.css('width', cellSideLength);
                 theNumberCell.css('top', getPosTop(i, j));
                 theNumberCell.css('left', getPosLeft(i, j));
+                theNumberCell.css('border-radius', 0.06 * cellSideLength);
                 theNumberCell.css('background-color', getNumberBackgroundColor(board[i][j]));
                 theNumberCell.css('color', getNumberColor(board[i][j]));
                 theNumberCell.text(board[i][j]);
@@ -67,6 +92,11 @@ function updateBoardView() {
             hasConflicted[i][j] = false;
         }
     }
+
+    $('.number-cell').css('line-height', cellSideLength + 'px');
+    $('.number-cell').css('font-size', 0.6 * cellSideLength + 'px');
+
+
 }
 
 
@@ -76,8 +106,7 @@ function generateOneNumber() {
     }
 
     let emptySpace = findEmptySpace(board);
-    console.log(emptySpace.length);
-    
+
     let [randX, randY] = emptySpace[parseInt(Math.random() * emptySpace.length)];
 
     let randNumber = Math.random() < 0.5 ? 2 : 4;
@@ -93,30 +122,34 @@ function generateOneNumber() {
 
 
 $(document).keydown(function (event) {
-    event.preventDefault();
+
     switch (event.keyCode) {
         case 37: // left
+            event.preventDefault();
             if (moveLeft()) {
                 setTimeout("generateOneNumber()", 210);
-                setTimeout("isGameOver()", 310); 
+                setTimeout("isGameOver()", 310);
             }
             break;
         case 38: // up
+            event.preventDefault();
             if (moveUp()) {
                 setTimeout("generateOneNumber()", 210);
-                setTimeout("isGameOver()", 310); 
+                setTimeout("isGameOver()", 310);
             }
             break;
         case 39: // right
+            event.preventDefault();
             if (moveRight()) {
                 setTimeout("generateOneNumber()", 210);
-                setTimeout("isGameOver()", 310); 
+                setTimeout("isGameOver()", 310);
             }
             break;
         case 40: //down
+            event.preventDefault();
             if (moveDown()) {
                 setTimeout("generateOneNumber()", 210);
-                setTimeout("isGameOver()", 310); 
+                setTimeout("isGameOver()", 310);
             }
             break;
         default:

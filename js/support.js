@@ -1,9 +1,16 @@
+let documentWidth = window.screen.availWidth;
+let gridContainerWidth = 0.92 * documentWidth;
+let cellSideLength = 0.18 * documentWidth;
+let cellSpace = 0.04 * documentWidth;
+
+
+
 function getPosTop(i, j) {
-    return 20 + 120 * i;
+    return cellSpace + (cellSpace + cellSideLength) * i;
 }
 
 function getPosLeft(i, j) {
-    return 20 + 120 * j;
+    return cellSpace + (cellSpace + cellSideLength) * j;
 }
 
 
@@ -105,7 +112,7 @@ function canMoveUp(board) {
 
 function canMoveDown(board) {
     for (let j = 0; j < 4; j++) {
-        for (let i = 2; i >=0; i--) {
+        for (let i = 2; i >= 0; i--) {
             if (board[i][j] != 0) {
                 if (board[i + 1][j] == 0 || board[i + 1][j] == board[i][j]) {
                     return true;
@@ -142,7 +149,7 @@ function findEmptySpace(board) {
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (board[i][j] == 0) {
-                emptySpaceArr.push([i,j]);
+                emptySpaceArr.push([i, j]);
             }
         }
     }
@@ -163,7 +170,7 @@ function nospace(board) {
 
 function nomove(board) {
     if (canMoveLeft(board) || canMoveRight(board) || canMoveUp(board) || canMoveDown(board)) {
-        return false        
+        return false
     }
     return true;
 }
